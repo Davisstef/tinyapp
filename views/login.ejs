@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<%- include('./partials/_head') %>
+<%- include('./partials/_header') %>
+    <h1 class=text-center>Please sign in to your account!</h1>
+        <form method="POST" action="/login" class=text-center>
+            <input type="email" placeholder="email" style="width: 300px" name="email">
+            <input type="password" placeholder="password" style="width: 300px" name="password">
+                <button type="submit">Submit</button>
+                <a href="/register">New Users</a>
+        </form>
+</body>
+</html>
