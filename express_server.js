@@ -12,7 +12,6 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
 app.set("view engine", "ejs");
-
 //Database
 let users = {};
 let urlDatabase = {};
@@ -67,6 +66,9 @@ app.get("/urls/new", (req, res) => {
 app.get("/u/:shortURL", (req, res) => {
   if (req.params.shortURL in urlDatabase) {
     let longURL = urlDatabase[req.params.shortURL].longURL;
+    if (!longURL.startsWith ('http://') && !longURL.startsWith ('https://')) {
+      longURL = "http://" + longURL
+    }
     res.redirect(longURL);
   } else {
     res.status(400);
@@ -75,7 +77,17 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 app.get("/register", (req, res) => {
-  res.render('register');
+  let user = users[req.session["user_id"]];
+  let templateVars = {
+    urls: urlDatabase,
+    user: user
+  };
+  if (user !== undefined) {
+    res.render("urls_index", templateVars);
+    return;
+  } else {
+    res.render("register", templateVars);  
+  }  
 });
 
 app.get("/urls/:id", (req, res) => {
@@ -96,7 +108,17 @@ app.get("/urls/:id", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  let user = users[req.session["user_id"]];
+  let templateVars = {
+    urls: urlDatabase,
+    user: user
+  };
+  if (user !== undefined) {
+    res.render("urls_index", templateVars);
+    return;
+  } else {
+    res.render("login", templateVars);  
+  }  
 });
 
 //Post Requests
@@ -119,17 +141,6 @@ app.post("/logout", (req, res) => {
   req.session = null;
   console.log("Successfully logged out!");
   res.redirect('/');
-});
-
-app.post("/urls", (req, res) => {
-  let shortURL = randomString();
-  let longURL = req.body.longURL;
-  let urlTemplate = {
-    userId: users[req.session.user_id].id,
-    longURL: longURL
-  };
-  urlDatabase[shortURL] = urlTemplate;
-  res.redirect(`/urls/${shortURL}`);
 });
 
 app.post("/urls", (req, res) => {
