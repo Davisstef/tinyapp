@@ -13,10 +13,6 @@ app.use(cookieSession({
 }));
 app.set("view engine", "ejs");
 
-//Database
-let users = {};
-let urlDatabase = {};
-
 //Randomize URLs
 function randomString() {
   let text = '';
@@ -30,10 +26,6 @@ function randomString() {
 //Get Requests
 app.get("/", (req, res) => {
   res.redirect('/login');
-});
-
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
 });
 
 app.get("/urls", (req, res) => {
