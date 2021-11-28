@@ -12,6 +12,7 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
 app.set("view engine", "ejs");
+
 //Database
 let users = {};
 let urlDatabase = {};
