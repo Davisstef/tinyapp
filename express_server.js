@@ -13,6 +13,10 @@ app.use(cookieSession({
 }));
 app.set("view engine", "ejs");
 
+//Database
+let users = {};
+let urlDatabase = {};
+
 //Randomize URLs
 function randomString() {
   let text = '';
@@ -31,8 +35,15 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let user = users[req.session["user_id"]];
   if (user !== undefined) {
+    let urls = {}
+    for (let url in urlDatabase) {
+    console.log(Object.values(url), url, urlDatabase[url])
+    if (urlDatabase[url].userId === req.session.user_id) {
+      urls[url] = urlDatabase[url]
+    }
+    }
     let templateVars = {
-      urls: urlDatabase,
+      urls: urls,
       user: user
     };
     res.render("urls_index", templateVars);
@@ -140,7 +151,7 @@ app.post("/urls", (req, res) => {
   let shortURL = randomString();
   let longURL = req.body.longURL;
   let urlTemplate = {
-    userId: users[req.session.user_id].id,
+    userId: req.session.user_id,
     longURL: longURL
   };
   urlDatabase[shortURL] = urlTemplate;
