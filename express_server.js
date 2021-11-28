@@ -29,7 +29,16 @@ function randomString() {
 
 //Get Requests
 app.get("/", (req, res) => {
+  let user = users[req.session["user_id"]];
+  let templateVars = {
+    urls: urlDatabase,
+    user: user
+  }
+  if (user !== undefined) {
+    res.redirect('/urls')
+  } else {
   res.redirect('/login');
+  }
 });
 
 app.get("/urls", (req, res) => {
