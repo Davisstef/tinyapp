@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-<%- include ('./partials/_head') %>
+<%- include('./partials/_head') %>
 <%- include('./partials/_header') %>
 <main style="margin: 1em;">
   <% if (user) { %>
@@ -19,7 +19,7 @@
         <% for (let url in urls) { %>
           <tr>
             <td><%= url%></td>
-            <td><a href="<%= urls[url].longUrl %>"><%= urls[url].longUrl%></a></td>
+            <td><a href="/u/<%= url%>"><%= urls[url].longURL%></a></td>
               <form class="form-inline" method="GET" action="/urls/<%= url %>">
             <td class=text-center><button type="submit" class="btn btn-outline-primary">⥭✍️⥫</button></td>
               </form>

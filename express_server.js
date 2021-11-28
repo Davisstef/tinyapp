@@ -33,12 +33,11 @@ app.get("/", (req, res) => {
   let templateVars = {
     urls: urlDatabase,
     user: user
-  }
+  };
   if (user !== undefined) {
     res.redirect('/urls')
-  } else {
+  } else {}
   res.redirect('/login');
-  }
 });
 
 app.get("/urls", (req, res) => {
@@ -47,14 +46,20 @@ app.get("/urls", (req, res) => {
     let urls = {}
     for (let url in urlDatabase) {
     console.log(Object.values(url), url, urlDatabase[url])
-    if (urlDatabase[url].userId === req.session.user_id) {
-      urls[url] = urlDatabase[url]
+      if (urlDatabase[url].userId === req.session.user_id) {
+        longURL = urlDatabase[url].longURL;
+        if (!longURL.startsWith ('http://') && !longURL.startsWith ('http://')) {
+          longURL = "http://" + longURL
+        } else if (longURL.startsWith ('http://') && longURL.startsWith ('http://')) {
+          longURL = urlDatabase[url].longURL;
+      }   
     }
-    }
+  }
     let templateVars = {
-      urls: urls,
+      urls: urlDatabase,
       user: user
     };
+    console.log (templateVars);
     res.render("urls_index", templateVars);
     return;
   } else {
@@ -79,8 +84,10 @@ app.get("/urls/new", (req, res) => {
 app.get("/u/:shortURL", (req, res) => {
   if (req.params.shortURL in urlDatabase) {
     let longURL = urlDatabase[req.params.shortURL].longURL;
-    if (!longURL.startsWith ('http://') && !longURL.startsWith ('https://')) {
+    if (longURL.startsWith ('www.')) {
       longURL = "http://" + longURL
+    } else if (!longURL.startsWith ('http://') && !longURL.startsWith ('https://')) {
+      longURL = "http://www." + longURL
     }
     res.redirect(longURL);
   } else {
