@@ -11,8 +11,13 @@
   </li>
   <div class="card text-center"></div>
       <div class="card-header"></div>
+<<<<<<< HEAD
       <form action="/urls/<%= shortURL %>" method="POST">
         <input id="longURLUpdated" type="text" value="https://www." style="width: 300px" name="longURL">
+=======
+      <form method="POST" action="/urls/<%=shortURL%>/update">
+        <input id="longURLUpdated" type="text" value="https://www." style="width: 300px" name="newLongURL">
+>>>>>>> 04aae17c2812741498c9daf0696ddf7f7819cfb5
         <button type="submit">Update</button>
     </form>
     <a href="/urls">See All</a>

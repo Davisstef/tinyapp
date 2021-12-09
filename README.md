@@ -5,19 +5,19 @@ TinyApp is a full stack web application built with Node and Express that allows 
 ## Final Product
 
 This is the Index of all of the user's created URLs. The long URL is a link to the website.
-!["Index"](#Index.png)
+![Index](https://user-images.githubusercontent.com/60591525/143985838-5fa2c0d6-20b5-4396-9519-133234c2818b.png)
 
 This is where users must log in or follow the link to create an account. Users must log in or sign up with a valid email and password.
-!["Login"](#Login.png)
+![Login](https://user-images.githubusercontent.com/60591525/143985861-47b9c6c3-73ef-45e8-8d06-e57534b433d5.png)
 
 This is where new users must register with a valid email and password to use the Tinyapp.
-!["Register"](#Register.png)
+![Register](https://user-images.githubusercontent.com/60591525/143985876-efa66787-5c0f-4e1f-be62-3cf2bce0b3f3.png)
 
 This is the area where users can create a tiny URL by entering the website name.
-!["NewURL"](#NewURL.png)
+![NewURL](https://user-images.githubusercontent.com/60591525/143985891-f5fb5078-5289-4741-ae20-2cff2891453d.png)
 
 This page displays the long URL and the tiny URL. Both the long URL and tiny URL send the user to the website.
-!["YourURL"](#YourURL.png)
+![YourURL](https://user-images.githubusercontent.com/60591525/143985900-a3cff9b9-b5f1-4056-8722-63660cbb9e3d.png)
 
 ## Dependencies
 
