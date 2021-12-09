@@ -32,11 +32,15 @@ app.get("/", (req, res) => {
     });
 
 app.get("/urls", (req, res) => {
-    let templateVars = {
+  if (!cookieHasUser(req.session.user_id, users)) {
+    res.redirect("/login");
+  } else {
+      let templateVars = {
         urls: urlsForUser(req.session.user_id, urlDatabase),
         user: users[req.session.user_id],
       };
       res.render("urls_index", templateVars);
+    }
     });
 
 app.get("/urls/new", (req, res) => {
@@ -51,7 +55,9 @@ app.get("/urls/new", (req, res) => {
     });
 
 app.get("/u/:shortURL", (req, res) => {
-    if (urlDatabase[req.params.shortURL]) {
+  if (!cookieHasUser(req.session.user_id, users)) {
+    res.status(404).send("Please log in.");
+  } else if (urlDatabase[req.params.shortURL]) {
         const longURL = urlDatabase[req.params.shortURL].longURL;
         if (longURL === undefined) {
           res.status(302);
@@ -75,12 +81,14 @@ app.get("/register", (req, res) => {
     });
 
 app.get("/urls/:shortURL", (req, res) => {
-    if (urlDatabase[req.params.shortURL]) {
+  if (!cookieHasUser(req.session.user_id, users)) {
+    res.status(404).send("Please log in.");
+    } else if (urlDatabase[req.params.shortURL]) {
         let templateVars = {
           shortURL: req.params.shortURL,
           longURL: urlDatabase[req.params.shortURL].longURL,
           urlUserID: urlDatabase[req.params.shortURL].userId,
-          user: users[req.session.user_id],
+          user: users[req.session.user_id]
         };
         res.render("urls_show", templateVars);
       } else {

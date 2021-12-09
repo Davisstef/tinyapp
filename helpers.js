@@ -48,8 +48,4 @@ module.exports = {
   emailHasUser,
   userIdFromEmail,
   urlsForUser
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 04aae17c2812741498c9daf0696ddf7f7819cfb5
