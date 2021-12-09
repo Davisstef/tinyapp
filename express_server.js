@@ -59,7 +59,7 @@ app.get("/u/:shortURL", (req, res) => {
           res.redirect(longURL);
         }
       } else {
-        res.status(404).send("Please enter the full website address.");
+        res.status(404).send("Cannot get URL.");
       }
     });
 
@@ -85,8 +85,9 @@ app.get("/urls/:shortURL", (req, res) => {
         res.render("urls_show", templateVars);
       } else {
         res.status(404).send("Cannot get URL.");
-      }
+      } 
     });
+
 app.get("/login", (req, res) => {
     if (cookieHasUser(req.session.user_id, users)) {
         res.redirect("/urls");
@@ -124,13 +125,16 @@ app.post("/logout", (req, res) => {
 app.post("/urls", (req, res) => {
     let shortURL = randomString();
     let longURL = req.body.longURL;
+    if (!longURL.startsWith ('http://') && !longURL.startsWith ('https://')) {
+  longURL = "https://" + longURL
+};
     let urlTemplate = {
         userId: req.session.user_id,
         longURL: longURL
     };
     urlDatabase[shortURL] = urlTemplate;
     res.redirect(`/urls/${shortURL}`);
-});
+}); 
 
 app.post("/urls/:shortURL/delete", (req, res) => {
     const userId = req.session.user_id;
@@ -144,17 +148,23 @@ app.post("/urls/:shortURL/delete", (req, res) => {
     }
   });
 
-app.post("/urls/:id/", (req, res) => {
+app.post("/urls/:id", (req, res) => {
     const userId = req.session.user_id;
     const userUrls = urlsForUser(userId, urlDatabase);
-    if (Object.keys(userUrls).includes(req.params.id)) {
+    let longURL = req.body.longURL;
+    if (!longURL.startsWith ('http://') && !longURL.startsWith ('https://')) {
+      longURL = "https://" + longURL
+    };
+  if (Object.keys(userUrls).includes(req.params.id)) {
       const shortURL = req.params.id;
-      urlDatabase[shortURL].longURL = req.body.newURL;
+      urlDatabase[shortURL].longURL = longURL;
       res.redirect('/urls');
     } else {
+      if (req.params.id !== userUrls)
       res.status(401).send("Please log in to edit URLs.");
     }
   });
+
 
 app.post("/register", (req, res) => {
     const submittedEmail = req.body.email;
