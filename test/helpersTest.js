@@ -2,6 +2,34 @@ const { assert } = require('chai');
 
 const { randomString, emailHasUser, userIdFromEmail, urlsForUser, cookieHasUser } = require('../helpers');
 
+const testUsers = {
+  "user1RandomID": {
+    id: "user1RandomID",
+    email: "user1@example.com",
+    password: "purple-monkey-dinosaur"
+  },
+  "user2RandomID": {
+    id: "user2RandomID",
+    email: "user2@example.com",
+    password: "blue-chimp-trex"
+  }
+};
+
+const testUrlDatabase = {
+  "bfjqot": {
+    longUrl: "http://www.lighthouselabs.ca",
+    userID: "user1RandomID"
+  },
+  "htlams": {
+    longUrl: "http://www.google.com",
+    userID: "user1RandomID"
+  },
+  "mjqcht": {
+    longUrl: "http://www.zara.com",
+    userID: "user2RandomID"
+  }
+};
+
 describe('randomString', function() {
 
   it('should return a string with six characters', function() {
