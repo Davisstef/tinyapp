@@ -5,19 +5,19 @@ TinyApp is a full stack web application built with Node and Express that allows 
 ## Final Product
 
 This is the Index of all of the user's created URLs. The long URL is a link to the website.
-![Index](https://user-images.githubusercontent.com/60591525/145494851-dc5ed238-5037-4938-83d6-074385a79451.png)
+![Index](https://user-images.githubusercontent.com/60591525/143985838-5fa2c0d6-20b5-4396-9519-133234c2818b.png)
 
 This is where users must log in or follow the link to create an account. Users must log in or sign up with a valid email and password.
-![Login](https://user-images.githubusercontent.com/60591525/145494863-6164b729-4bde-4855-a0d9-615bd7945ba7.png)
+![Login](https://user-images.githubusercontent.com/60591525/143985861-47b9c6c3-73ef-45e8-8d06-e57534b433d5.png)
 
 This is where new users must register with a valid email and password to use the Tinyapp.
-![Register](https://user-images.githubusercontent.com/60591525/145494883-938f96b7-0938-47a5-899f-5fb26d407255.png)
+![Register](https://user-images.githubusercontent.com/60591525/143985876-efa66787-5c0f-4e1f-be62-3cf2bce0b3f3.png)
 
 This is the area where users can create a tiny URL by entering the website name.
-![NewURL](https://user-images.githubusercontent.com/60591525/145494936-d2a84eef-f92a-4c0a-9ed2-4f84cf826aa3.png)
+![NewURL](https://user-images.githubusercontent.com/60591525/143985891-f5fb5078-5289-4741-ae20-2cff2891453d.png)
 
 This page displays the long URL and the tiny URL. Both the long URL and tiny URL send the user to the website.
-![YourURL](https://user-images.githubusercontent.com/60591525/145494947-5d123a02-6c5b-423e-aa6a-1e459c4e8aa4.png)
+![YourURL](https://user-images.githubusercontent.com/60591525/143985900-a3cff9b9-b5f1-4056-8722-63660cbb9e3d.png)
 
 ## Dependencies
 
