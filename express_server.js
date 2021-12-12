@@ -81,7 +81,9 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  if (!cookieHasUser(req.session.user_id, users)) {
+  if (!urlDatabase[req.params.shortURL]) {
+    res.status(404).send("This URL does not exist.");
+  } else if (!cookieHasUser(req.session.user_id, users)) {
     res.status(404).send("Please log in.");
   } else if (urlDatabase[req.params.shortURL]) {
     let templateVars = {
@@ -93,7 +95,10 @@ app.get("/urls/:shortURL", (req, res) => {
     res.render("urls_show", templateVars);
   } else {
     res.status(404).send("Cannot get URL.");
-  } 
+  };
+  if (userId !== urlDatabase[req.params.shortURL].userId) {
+    return res.status(401).send("You do not have the permission to access this page.");
+  }
 });
 
 app.get("/login", (req, res) => {
@@ -166,9 +171,10 @@ app.post("/urls/:id", (req, res) => {
     const shortURL = req.params.id;
     urlDatabase[shortURL].longURL = longURL;
     res.redirect('/urls');
-  } else {
-    if (req.params.id !== userUrls)
-    res.status(401).send("Please log in to edit URLs.");
+  } else if (req.params.id !== userUrls) {
+  res.status(400).send("You are not logged in.");
+  } else if (!userId) {
+  return res.status(401).send("You do not have the permission to access this page.");
   }
 });
 

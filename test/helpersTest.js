@@ -25,7 +25,7 @@ const testUrlDatabase = {
     userID: "user1RandomID"
   },
   "mjqcht": {
-    longUrl: "http://www.zara.com",
+    longUrl: "http://www.facebook.com",
     userID: "user2RandomID"
   }
 };
