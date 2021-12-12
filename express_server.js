@@ -86,7 +86,7 @@ app.get("/urls/:shortURL", (req, res) => {
     longURL: urlDatabase[req.params.shortURL].longURL,
     urlUserID: urlDatabase[req.params.shortURL].userId,
     user: users[req.session.user_id]
-  }
+  };
   if (!cookieHasUser(req.session.user_id, users)) {
     res.status(404).send("Please log in.");
   } if (req.session.user_id !== urlDatabase[req.params.shortURL].userId) {
