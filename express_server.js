@@ -60,7 +60,7 @@ app.get("/u/:shortURL", (req, res) => {
   } else if (urlDatabase[req.params.shortURL]) {
     const longURL = urlDatabase[req.params.shortURL].longURL;
     if (longURL === undefined) {
-      res.status(302);
+      res.status(404).send("Cannot get URL."); 
     } else {
       res.redirect(longURL);
     }
@@ -81,24 +81,22 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/urls/:shortURL", (req, res) => {
-  if (!urlDatabase[req.params.shortURL]) {
-    res.status(404).send("This URL does not exist.");
-  } else if (!cookieHasUser(req.session.user_id, users)) {
-    res.status(404).send("Please log in.");
-  } else if (urlDatabase[req.params.shortURL]) {
-    let templateVars = {
-      shortURL: req.params.shortURL,
-      longURL: urlDatabase[req.params.shortURL].longURL,
-      urlUserID: urlDatabase[req.params.shortURL].userId,
-      user: users[req.session.user_id]
-    };
-    res.render("urls_show", templateVars);
-  } else {
-    res.status(404).send("Cannot get URL.");
-  };
-  if (userId !== urlDatabase[req.params.shortURL].userId) {
-    return res.status(401).send("You do not have the permission to access this page.");
+  let templateVars = {
+    shortURL: req.params.shortURL,
+    longURL: urlDatabase[req.params.shortURL].longURL,
+    urlUserID: urlDatabase[req.params.shortURL].userId,
+    user: users[req.session.user_id]
   }
+  if (!cookieHasUser(req.session.user_id, users)) {
+    res.status(404).send("Please log in.");
+  } if (req.session.user_id !== urlDatabase[req.params.shortURL].userId) {
+    return res.status(401).send("You do not have permission to access this page.");
+  } if (!req.session.user_id) {
+    return res.status(401).send("You do not have permission to access this page.");
+  } if (req.params.shortURL === undefined) {
+    return res.status(404).send ("This page cannot be displayed.")
+  }
+  res.render("urls_show", templateVars);
 });
 
 app.get("/login", (req, res) => {
@@ -171,10 +169,9 @@ app.post("/urls/:id", (req, res) => {
     const shortURL = req.params.id;
     urlDatabase[shortURL].longURL = longURL;
     res.redirect('/urls');
-  } else if (req.params.id !== userUrls) {
-  res.status(400).send("You are not logged in.");
-  } else if (!userId) {
-  return res.status(401).send("You do not have the permission to access this page.");
+  } else {
+    if (req.params.id !== userUrls)
+    res.status(401).send("Please log in to edit URLs.");
   }
 });
 
